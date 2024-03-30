@@ -1,0 +1,37 @@
+/* Fonts */
+@font-face {
+    font-family: cardsFont;
+    src: url(fonts/CARDC___.TTF);
+}
+
+*{
+    font-family: cardsFont;
+}
+
+body{
+    /* background-image: url(images/background.jpg); */
+    background-image: url(images/background2.png);
+    background-size: cover;
+}
+
+.button-3d {
+    height: 50px;
+    width: 140px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 3px solid black;
+    border-radius: 4px;
+    transition: background-color 0.1s 0s;
+    box-shadow: -2px 5px black;
+    cursor: pointer;
+}
+
+.button-3d:hover {
+    transform: translateY(1.5px);
+    box-shadow: -2px 3.5px black;
+}
+
+.button-3d:active{
+    transform: translateY(3px);
+    box-shadow: -2px 2px black;
+}

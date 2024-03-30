@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- general.css first so it doesn't override anything -->
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="index.css">
+    <script type="module" src="index.js"></script>
+    <title>BlackJack</title>
+  </head>
+  <body>
+    <div>
+      <div class="container">
+        <div class="split-screen">
+          <div id="setPlayersContainer">
+            <button id="btnRemovePlayer" class="button-3d playerAmountButton">- 1</button>
+            <p id="displayNumOfPlayers">Amount of Players - 1</p>
+            <button id="btnAddPlayer" class="button-3d playerAmountButton">+ 1</button>
+          </div>
+          <div class="inputsContainer">
+            <div class="inputContainer">
+              <label for="player1" class="inputLabel">Player 1</label>
+              <input id="inputName1" class="inputPlayerName" type="text" spellcheck="false" maxlength="10">
+            </div>
+            <div class="inputContainer input-left">
+              <label for="player1" class="inputLabel">Player 2</label>
+              <input id="inputName2" class="inputPlayerName" type="text" spellcheck="false" maxlength="10">
+            </div>
+            <div class="inputContainer">
+              <label for="player1" class="inputLabel">Player 3</label>
+              <input id="inputName3" class="inputPlayerName" type="text" spellcheck="false" maxlength="10">
+            </div>
+            <div class="inputContainer input-left">
+              <label for="player1" class="inputLabel">Player 4</label>
+              <input id="inputName4" class="inputPlayerName" type="text" spellcheck="false" maxlength="10">
+            </div>
+          </div>
+        </div>
+        <div class="split-screen">
+          <img id="logo" src="images/logo.png">
+          <button id="btnStart" class="button-3d">Start Game</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

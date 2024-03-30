@@ -1,0 +1,263 @@
+/* Vars & Others */
+:root{
+    --panel-height: 25%;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+/* Game Container */
+
+#containerGame{
+    display: flex;
+    height: calc(100% - var(--panel-height));
+    justify-content: space-between;
+}
+
+#containerGame > :first-child{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*Player Info*/
+
+#containerPlayersInfo{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid black;
+    background-color: gray;
+    width: 15%;
+    align-items: center;
+}
+
+.containerPlayerInfo{
+    width: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.playerInfo{
+    background-color: rgb(223, 233, 239);
+    border: 3px solid black;
+    border-radius: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    box-shadow: -3px 3px rgb(48, 48, 48);
+    padding: 2% 0;
+}
+
+.playerInfo *{
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.playerName{
+    letter-spacing: 0.75px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.playerInfo > div{
+    background-color: lightblue;
+    border: 3px solid black;
+    padding: 5px 0;
+    margin: 5px;
+    box-shadow: -2px 2px rgb(144, 144, 144);
+}
+
+.playerInfo > div :nth-child(3){
+    margin-top: 10px;
+}
+
+.playerInfo > div :nth-child(2n){
+    margin-top: 3px;
+}
+
+/* Dealer & Player */
+
+#dealerTitle, #playerTitle{
+    background-color: white;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+#dealerTitle {
+    margin-right: 5%;
+}
+
+#playerTitle {
+    margin-left: 15% !important;
+}
+
+#dealerTitle, #dealerHand{
+    margin-left: auto;
+}
+
+#dealerHand{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 431px;
+}
+
+#playerTitle, #playerHandMain {
+    position: relative;
+    bottom: 35%;
+    margin-left: 10%;
+}
+
+#playerHandSplit {
+    position: relative;
+    bottom: 66%;
+    left: 63%; 
+}
+
+#playerHandSplit > .cards-row + .cards-row {
+    bottom: 37%;
+}
+
+/* Cards */
+
+.cards-row{
+    width: 400px;
+    height: 199px;
+    display: flex;
+}
+
+.cards-row, #playerHandMain, #playerHandSplit{
+    width: fit-content;
+}
+
+.cards-row + .cards-row {
+    position: relative;
+    bottom: 35%;
+    left: 10%;
+}
+
+.card-scene{
+    width: 137.13px;
+    height: 196.73px;
+    perspective: 1800px;
+}
+
+.card{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.5s 0.25s;
+    transform-style: preserve-3d;
+}
+
+.card-flipped{
+    transform: rotateY(180deg)
+}
+
+.card-front, .card-back{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.card-front{
+    transform: rotateY(180deg);
+}
+
+.card-image{
+    width: 133px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+/* Panel */
+
+#containerPanel{
+    /* visibility: hidden; */
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: var(--panel-height);
+    background-color: gray;
+    border-top: 3px solid black;
+}
+
+#containerActionButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    margin: 2%;
+}
+
+.action-buttons-row{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.action-buttons-row + .action-buttons-row {
+    margin-top: 25px;
+}
+
+.button-3d{
+    letter-spacing: 1px;
+}
+
+#btnSurrender{
+    background-color: #FF6961;
+}
+
+#btnSurrender:hover{
+    background-color: #D45750;
+}
+
+#btnSurrender:active{
+    background-color: #D45750;
+}
+
+#containerBets{
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
+}
+
+#inputTextBet,
+#inputSliderBet{
+    margin-bottom: 3%;
+}
+
+#inputTextBet{
+    width: 80%;
+    height: 50px;
+    text-align: center;
+    font-size: 40px;
+    border: 3px solid black;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+#btnPlaceBet{
+    letter-spacing: 1.5px;
+    width: 100%;
+    background-color: rgb(109, 255, 109);
+}

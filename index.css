@@ -1,0 +1,148 @@
+/* Vars */
+
+:root{
+    --black-border: 2px solid black;
+}
+
+/* Body */
+
+html, body{
+    height: 90%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+}
+
+.split-screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+/* Body - Player Amount Section*/
+
+#setPlayersContainer{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#displayNumOfPlayers{
+    background-color: white;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    border: var(--black-border);
+    border-radius: 4px;
+    box-shadow: -3px 3px rgb(0, 0, 0);
+}
+
+.playerAmountButton{
+    width: 70px;
+    font-size: 20px;
+}
+
+#btnRemovePlayer{
+    background-color: #FF6961;
+}
+
+#btnRemovePlayer:hover{
+    background-color: #D45750;
+}
+
+#btnRemovePlayer:active{
+    background-color: #D45750;
+}
+
+#btnAddPlayer{
+    background-color: #6FC377;
+}
+
+#btnAddPlayer:hover {
+    background-color: #5CA262;
+}
+
+#btnAddPlayer:active {
+    background-color: #5CA262;
+}
+
+/*Body - Input Section */
+
+.inputsContainer{
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.inputContainer{
+    margin: 20px 15px 5px;
+    border: var(--black-border);
+    border-radius: 4px;
+    background-color: gray;
+    box-shadow: -2.5px 3.5px rgb(0, 0, 0);
+}
+
+.inputLabel{
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.inputPlayerName{
+    display: block;
+    border: var(--black-border);
+    border-radius: 4px;
+    outline: none;
+    height: 40px;
+    width: 300px;
+    margin: 2px;
+    font-size: 20px;
+}
+
+/* Body - Logo & Start Button Section */
+
+#logo{
+    width: 600px;
+}
+
+#btnStart{
+    width: 400px;
+    height: 65px;
+    font-size: 30px;
+    letter-spacing: 1.5px;
+    background-color: #6FC377;
+}
+
+/* 
+#6FC377 
+#5CA262
+*/
+
+#btnStart:hover {
+    background-color: #5CA262;
+}
+
+#btnStart:active {
+    background-color: #5CA262;
+}
