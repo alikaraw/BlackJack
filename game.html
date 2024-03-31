@@ -9,6 +9,107 @@
     <title>BlackJack</title>
   </head>
   <body>
+    <div id="containerOverlay" class="isOnScreen">
+      <div id="startRoundMessage">
+        <p>Place your bets to start the game</p> 
+      </div>
+      <div id="containerOverlaySummery">
+        <div>Round Summary</div>
+        <div id="containerOverlayDealer">
+          <p>Dealer (19 Points)</p>
+          <div id="containerSummaryCards">
+            <img src="images/cards/10_of_hearts.svg">
+            <img src="images/cards/10_of_hearts.svg">
+          </div>
+        </div>
+        <div id="containerOverlayPlayers">
+          <div class="containerOverlayPlayer">
+            <p>Player Name</p>
+            <div class="containerOverlayPlayerInfo">
+                <div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand One
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand Two
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                </div>
+              <div>500$ - Insurance</div>
+              <div>Total Money Lost - 2500$</div>
+              <div>Total Money Won - 2500$</div>
+              <div>New Total Balance - 2500$</div>
+            </div>
+          </div>
+          <div class="containerOverlayPlayer">
+            <p>Player Name</p>
+            <div class="containerOverlayPlayerInfo">
+                <div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand One
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand Two
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                </div>
+              <div>500$ - Insurance</div>
+              <div>Total Money Lost - 2500$</div>
+              <div>Total Money Won - 2500$</div>
+              <div>New Total Balance - 2500$</div>
+            </div>
+          </div>
+          <div class="containerOverlayPlayer">
+            <p>Player Name</p>
+            <div class="containerOverlayPlayerInfo">
+                <div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand One
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand Two
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                </div>
+              <div>500$ - Insurance</div>
+              <div>Total Money Bet - 2500$</div>
+              <div>Total Money Won - 2500$</div>
+              <div>New Total Balance - 2500$</div>
+            </div>
+          </div>
+          <div class="containerOverlayPlayer">
+            <p>Player Name</p>
+            <div class="containerOverlayPlayerInfo">
+                <div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand One
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                  <div class="containerOverlayPlayerHand">
+                    Hand Two
+                    <p>18 Points</p>
+                    <p>2500$ Bet</p>
+                  </div>
+                </div>
+              <div>500$ - Insurance</div>
+              <div>Total Money Lost - 2500$</div>
+              <div>Total Money Won - 2500$</div>
+              <div>New Total Balance - 2500$</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="containerGame">
       <div>
         <p id="dealerTitle">Dealer (15 Points)</p>
@@ -148,7 +249,7 @@
         <div id="playerHandSplit">
           <div class="cards-row">
             <div class="card-scene">
-              <div class="card">
+              <div class="card card-flipped">
                 <div class="card-front">
                   <img class="card-image" src="images/cards/10_of_hearts.svg">
                 </div>
@@ -158,7 +259,7 @@
               </div>
             </div>
             <div class="card-scene">
-              <div class="card">
+              <div class="card card-flipped">
                 <div class="card-front">
                   <img class="card-image" src="images/cards/10_of_hearts.svg">
                 </div>
@@ -168,7 +269,7 @@
               </div>
             </div>
             <div class="card-scene">
-              <div class="card">
+              <div class="card card-flipped">
                 <div class="card-front">
                   <img class="card-image" src="images/cards/10_of_hearts.svg">
                 </div>
@@ -180,7 +281,7 @@
           </div>
           <div class=cards-row>
             <div class="card-scene">
-              <div class="card">
+              <div class="card card-flipped">
                 <div class="card-front">
                   <img class="card-image" src="images/cards/10_of_hearts.svg">
                 </div>
@@ -190,7 +291,7 @@
               </div>
             </div>
             <div class="card-scene">
-              <div class="card">
+              <div class="card card-flipped">
                 <div class="card-front">
                   <img class="card-image" src="images/cards/10_of_hearts.svg">
                 </div>
@@ -200,7 +301,7 @@
               </div>
             </div>
             <div class="card-scene">
-              <div class="card">
+              <div class="card card-flipped">
                 <div class="card-front">
                   <img class="card-image" src="images/cards/10_of_hearts.svg">
                 </div>
@@ -256,22 +357,45 @@
       </div>
     </div>
     <div id="containerPanel">
+      <div id="containerPlayerInformationPanel">
+        <div>
+          <p>Ali</p>
+          <p>2500$</p>
+          <p>0 Points</p>
+          <p>500$ Bet</p>
+        </div>
+      </div>
       <div id="containerActionButtons">
         <div class="action-buttons-row">
             <button id="btnHit" class="button-3d">Hit</button>
-            <button id="btnDouble" class="button-3d">Double Down</button>
             <button id="btnStand" class="button-3d">Stand</button>
-        </div>
-        <div class="action-buttons-row">
+            <button id="btnSurrender" class="button-3d">Surrender</button>
+          </div>
+          <div class="action-buttons-row">
+            <button id="btnDouble" class="button-3d">Double Down</button>
             <button id="btnSplit" class="button-3d">Split</button>
             <button id="btnInsurance" class="button-3d">insurance</button>
-            <button id="btnSurrender" class="button-3d">Surrender</button>
         </div>
-    </div>
-        <div id="containerBets">
-          <input type="text" id="inputTextBet">
-          <button id="btnPlaceBet" class="button-3d">Place bet</button>
+      </div>
+      <button id="btnNextPlayer" class="button-3d">Next Player</button>
+      <div id="containerPlaceBet">
+        <div>
+          <button id="btnBetReset" class="button-3d" >Reset Bet</button>
+          <button id="btnBetAllIn" class="button-3d" >All In</button>
         </div>
+        <div id="containerChips">
+          <img class="chip" src="images/chip_1.png">
+          <img class="chip" src="images/chip_5.png">
+          <img class="chip" src="images/chip_10.png">
+          <img class="chip" src="images/chip_25.png">
+          <img class="chip" src="images/chip_100.png">
+          <img class="chip" src="images/chip_500.png">
+        </div>
+      </div>
+      <div id="containerConfirmBet">
+        <div id="TextBet">500$</div>
+        <button id="btnBetConfirm" class="button-3d">Place bet</button>
+      </div>
     </div>
   </body>
 </html>

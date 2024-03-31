@@ -35,11 +35,6 @@ export default class Card {
     getSymbolName() { return Card.symbolNames[this.symbol]; }
 
     /**
-     * @returns {Boolean} whether the card is face up  
-     */
-    isCardUp() { return this.isUp; }
-
-    /**
      * sets the card face 
      * @param {Boolean} isFaceUp whether the card is faced up or down 
      */

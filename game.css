@@ -14,6 +14,135 @@ body{
     overflow-y: hidden;
 }
 
+/* Overlay Container */
+
+.isOnScreen {
+    bottom: 25% !important;
+}
+
+#containerOverlay{
+    position: fixed;
+    bottom: 100%;
+    width: 85%;
+    height: calc(100% - var(--panel-height));
+    z-index: 1;
+    background-color: lightgray;
+    transition: bottom 2s;
+}
+
+#startRoundMessage{
+    display: flex;
+    font-weight: bold;
+    font-size: 30px;
+    justify-content: center;
+    margin: 250px;
+}
+
+#containerOverlaySummery{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+}
+
+#containerOverlaySummery > :first-child{
+    background-color: white;
+    margin-top: 10px;
+    border: 3px solid black;
+    border-radius: 5px;
+    width: 350px;
+    padding-top: 5px;
+    height: 35px;
+    font-size: 25px;
+    box-shadow: -3px 3px rgb(48, 48, 48);
+}
+
+#containerOverlayDealer {
+    width: fit-content;
+    background-color: gray;
+    border: 3px solid black;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 3px;
+    font-size: 22px;
+    box-shadow: -3px 3px rgb(48, 48, 48);
+}
+
+#containerOverlayDealer > :first-child{
+    margin: 0 5px;
+}
+
+#containerSummaryCards{
+    background-color: rgb(184, 183, 183);
+    border: 3px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    padding-top: 10px;
+}
+
+#containerSummaryCards * {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 100px;
+    margin: 0 3px;
+}
+
+#containerOverlayPlayers{
+    display: flex;
+}
+
+.containerOverlayPlayer,
+.containerOverlayPlayerInfo,
+.containerOverlayPlayerInfo > :not(:first-child) {
+    border: 3px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.containerOverlayPlayerInfo > :first-child {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: px;
+}
+
+.containerOverlayPlayer{
+    background-color: rgb(122, 239, 149);
+    box-shadow: -3px 3px rgb(48, 48, 48);
+}
+
+.containerOverlayPlayer > :first-child{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.containerOverlayPlayer > * {
+    font-size: 16px;
+}
+
+.containerOverlayPlayerInfo{
+    background-color: gray;
+}
+
+.containerOverlayPlayerInfo > :not(:first-child),
+.containerOverlayPlayerHand{
+    background-color: white;
+}
+
+.containerOverlayPlayerHand {
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+.containerOverlayPlayerHand > *{
+    margin: 5px 10px;
+}
+
 /* Game Container */
 
 #containerGame{
@@ -31,6 +160,7 @@ body{
 /*Player Info*/
 
 #containerPlayersInfo{
+    z-index: 2;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -155,6 +285,11 @@ body{
     width: 137.13px;
     height: 196.73px;
     perspective: 1800px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: top 0.4s, bottom 0.4s, left 0.4s, right 0.4s;
 }
 
 .card{
@@ -190,26 +325,93 @@ body{
 
 #containerPanel{
     /* visibility: hidden; */
-    z-index: 1;
+    z-index: 2;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     width: 100%;
     height: var(--panel-height);
     background-color: gray;
     border-top: 3px solid black;
 }
 
+#containerPanel > :first-child{
+    margin-left: 3% !important;
+}
+
+#containerPanel > div {
+    margin-left: 10%;
+}
+
+/* Panel - Player Information Section */
+
+#containerPlayerInformationPanel{
+    background-color: rgb(223, 233, 239);
+    border: 3px solid black;
+    border-radius: 10px;
+    margin: auto 0;
+    width: 15%;
+    box-shadow: -3px 3px rgb(48, 48, 48);
+    padding: 10px;
+}
+
+#containerPlayerInformationPanel > div{
+    background-color: lightblue;
+    border: 3px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#containerPlayerInformationPanel > div * {
+    font-weight: bold;
+    font-size: 19px;
+    margin: 5px 0;
+    letter-spacing: 1px;
+}
+
+#containerPlayerInformationPanel> div :first-child{
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+#containerPlayerInformationPanel> div :nth-child(2){
+    font-size: 23px;
+}
+
+#containerPlayerInformationPanel> div :nth-child(3){
+    margin-top: 10px;
+} 
+
+#containerPlayerInformationPanel> div :last-child{
+    margin-bottom: 10px;
+}
+
+/* Panel - Action Buttons Section */
+
+#btnNextPlayer{
+    display: none;
+    background-color: lightgreen;
+    font-size: 24px;
+    height: 70px;
+    width: 250px;
+    margin: auto;
+}
+
 #containerActionButtons{
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
-    width: 30%;
+    width: 45%;
     margin: 2%;
 }
 
 .action-buttons-row{
     display: flex;
     justify-content: space-evenly;
+}
+
+.action-buttons-row * {
+    height: 60px;
+    width: 180px;
 }
 
 .action-buttons-row + .action-buttons-row {
@@ -232,21 +434,37 @@ body{
     background-color: #D45750;
 }
 
-#containerBets{
+.button-3d:disabled{
+    cursor: default;
+    background-color: rgb(91, 91, 91) !important;
+    color: black;
+    transform: translateY(3px);
+    box-shadow: -2px 2px black;
+}
+
+.button-3d:disabled:hover {
+    transform: translateY(3px);
+    box-shadow: -2px 2px black;
+}
+
+.button-3d:disabled:active{
+    transform: translateY(3px);
+    box-shadow: -2px 2px black;
+}
+
+/* Panel: Bets Section */
+
+#containerConfirmBet{
     width: 22%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 2%;
 }
 
-#inputTextBet,
-#inputSliderBet{
+#TextBet{
+    background-color: white;
     margin-bottom: 3%;
-}
-
-#inputTextBet{
     width: 80%;
     height: 50px;
     text-align: center;
@@ -256,8 +474,51 @@ body{
     letter-spacing: 1px;
 }
 
-#btnPlaceBet{
+#btnBetConfirm{
     letter-spacing: 1.5px;
     width: 100%;
     background-color: rgb(109, 255, 109);
+}
+
+#containerPlaceBet{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#containerPlaceBet > :first-child * {
+    width: 180px;
+}
+
+#containerChips{
+    margin-top: 15px;
+    display: flex;
+    height: 95px;
+    background-color: lightgray;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 10px;
+    box-shadow: -3px 3px rgb(48, 48, 48);
+}
+
+.chip{
+    position: relative;
+    border: 1px solid black;
+    border-radius: 100px;
+    width: 90px;
+    margin-right: 10px;
+    cursor: pointer;
+    box-shadow: -2.5px 2px rgb(29, 29, 29);
+    top: 0;
+    transition: top 5;
+}
+
+.chip:hover{
+    top: -5px;
+}
+
+#containerChips :last-child{
+    margin: 0;
 }
