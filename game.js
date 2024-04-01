@@ -74,7 +74,7 @@ for(let iChip = 0; iChip < imgChips.length; iChip++) {
 }
 
 btnBetConfirm.onclick = () => {
-    // if(CurrentBetAmount == 0) { return; } NOTE: remove the comment
+    if(CurrentBetAmount == 0) { return; }
 
     Players[CurrentPlayerIndex].bet = CurrentBetAmount;
     Players[CurrentPlayerIndex].balance -= CurrentBetAmount;

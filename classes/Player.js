@@ -41,8 +41,7 @@ export default class Player {
      * @returns whether the player can split his hand
      */
     canSplit() {
-        return true;
-        // return this.handMain.length == 2 && this.handSplit.length == 0 && this.handMain[0].value == this.handMain[1].value && this.balance >= this.bet;
+        return this.handMain.length == 2 && this.handSplit.length == 0 && this.handMain[0].value == this.handMain[1].value && this.balance >= this.bet;
     }
 
     /**
