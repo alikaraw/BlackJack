@@ -5,7 +5,6 @@ import Deck from "./classes/Deck";
 import Player from "./classes/Player";
 
 /* HTML Elements */
-let containerPlayersInfo = document.getElementById("containerPlayersInfo");
 
 let btnNextPlayer = document.getElementById("btnNextPlayer");
 let btnHit = document.getElementById("btnHit");
@@ -28,16 +27,15 @@ let btnBetConfirm = document.getElementById("btnBetConfirm");
 let btnBetReset = document.getElementById("btnBetReset");
 let btnBetAllIn = document.getElementById("btnBetAllIn");
 
-let containerOverlay = document.getElementById("containerOverlay");
 let startRoundMessage = document.getElementById("startRoundMessage");
+let containerOverlay = document.getElementById("containerOverlay");
 let containerOverlaySummery = document.getElementById("containerOverlaySummery");
 let containerOverlayDealer = document.getElementById("containerOverlayDealer");
 let containerOverlayPlayer = document.querySelectorAll(".containerOverlayPlayer");
-
+let containerPlayersInfo = document.getElementById("containerPlayersInfo");
 let containerActionButtons = document.getElementById("containerActionButtons");
 let containerConfirmBet = document.getElementById("containerConfirmBet");
 let containerPlaceBet = document.getElementById("containerPlaceBet");
-
 let containerPlayerInformationPanel = document.getElementById("containerPlayerInformationPanel");
 
 /* Vars */
@@ -133,8 +131,7 @@ btnDouble.onclick = () => {
     updateHandElement(Players[CurrentPlayerIndex].handMain, playerHandMain);
 
     // double the bet
-    Players[CurrentPlayerIndex].balance -= Players[CurrentPlayerIndex].bet;
-    Players[CurrentPlayerIndex].bet *= 2;
+    Players[CurrentPlayerIndex].doubleHand();
 
     // finish game
     CurrentPlayerFinished = true;
@@ -143,8 +140,7 @@ btnDouble.onclick = () => {
 
 // Give up bet but get 0.5 of the bet back
 btnSurrender.onclick = () => {
-    Players[CurrentPlayerIndex].balance += Players[CurrentPlayerIndex].bet * 0.5;
-    Players[CurrentPlayerIndex].bet = 0;
+    Players[CurrentPlayerIndex].surrenderHand();
     CurrentPlayerFinished = true;
     updatePlayerGame();
 }
@@ -160,7 +156,6 @@ btnInsurance.onclick = () => {
     updatePlayerGame();    
 }
 
-// Next player turn to play CHECK IF PLAYER HAVE ANOTHER HAND IF SO CHANGE BUTTON TO "next hand"
 btnNextPlayer.onclick = () => {
     if(FinishedTheRound) {
         togglePanel(true);
@@ -190,7 +185,7 @@ btnNextPlayer.onclick = () => {
                 finishGameRound();
             }
         }, 1000);
-    } else {
+    } else { // next player
         CurrentPlayerIndex++;
         updatePlayerVisual = true;
     }
@@ -221,9 +216,7 @@ function initGameCycle() {
     for(; iPlayer < AmountOfPlayers; iPlayer++) {
         let playerName = sessionStorage.getItem(`player${iPlayer}`);
         Players.push(new Player(playerName));
-        if(AmountOfPlayers != 1) {
-            updatePlayerInfo(iPlayer);
-        }
+        updatePlayerInfo(iPlayer);
     }
 
     for(; iPlayer < containerPlayersInfo.children.length; iPlayer++) {
@@ -318,7 +311,7 @@ function finishGameRound() {
 
         // Total Bet Money
         let totalBetMoney = player.bet * (didPlayerSplit ? 2 : 1) + player.insurance;
-        playerOverlayInformation.children[2].innerHTML = `${totalBetMoney}$ - Total Money Bet`;       
+        playerOverlayInformation.children[2].innerHTML = `${totalBetMoney}$ - Total Money Bet`;
 
         // Total Money Won
         let totalWonMoney = 0;
@@ -359,8 +352,19 @@ function finishGameRound() {
         // New Total Balance
         player.balance += totalWonMoney;
         playerOverlayInformation.children[4].innerHTML = `${player.balance}$ - Total Balance`;
+
+        // Color Backhground according to win/lose/tie with money
+        if(totalWonMoney > totalBetMoney) {
+            containerOverlayPlayer[iPlayer].style.backgroundColor = "#7aef95";
+        } else if (totalWonMoney < totalBetMoney) {
+            containerOverlayPlayer[iPlayer].style.backgroundColor = "#F77B7D";
+        } else {
+            containerOverlayPlayer[iPlayer].style.backgroundColor = "#7ba7f7";
+
+        }
     }
 
+    // make other panels invisible
     for(; iPlayer < 4; iPlayer++) {
         containerOverlayPlayer[iPlayer].style.display = 'none';
     }
@@ -456,7 +460,7 @@ function updatePlayerInfo(iPlayer) {
     playerInfoElement.children[0].innerHTML = Players[iPlayer].name;
     playerInfoElement.children[1].innerHTML = `${Players[iPlayer].balance}$`
     if(!Players[iPlayer].getSplitHandPoints()) {
-        playerInfoElement.children[2].innerHTML = `${Players[iPlayer].getMainHandPoints()} Points`; // if 2 hands type with / between the numbers
+        playerInfoElement.children[2].innerHTML = `${Players[iPlayer].getMainHandPoints()} Points`; 
         playerInfoElement.children[3].innerHTML = `${Players[iPlayer].bet}$ Bet`
     } else {
         playerInfoElement.children[2].innerHTML = `${Players[iPlayer].getMainHandPoints()} / ${Players[iPlayer].getSplitHandPoints()} Points`; // if 2 hands type with / between the numbers
@@ -521,8 +525,8 @@ function updateActionButtons() {
     
     let player = Players[CurrentPlayerIndex];
 
-    btnSurrender.disabled = !(player.handMain.length == 2 && player.handSplit.length == 0);
-    btnDouble.disabled = !(player.balance >= player.bet && player.handMain.length == 2 && player.handSplit.length == 0);
+    btnSurrender.disabled = !player.canSurrender();
+    btnDouble.disabled = !player.canDouble();
     btnSplit.disabled = !player.canSplit();
 
     // dealer has ace OR player already took insurance
@@ -530,7 +534,7 @@ function updateActionButtons() {
     
     // hand over 21 OR currentPlayerFinished > means the current player is done playing
     if(player.getMainHandPoints() >= 21 || CurrentPlayerFinished) {
-        btnHit.disabled = true;
+        // btnHit.disabled = true;
         btnDouble.disabled = true;
         btnStand.disabled = true;
         btnSplit.disabled = true;
@@ -550,7 +554,7 @@ function updateActionButtons() {
 }
 
 /**
- * toggles between bet panel and action button panel 
+ * Toggles between bet panel and action button panel 
  * @param {Boolean} isBetPanel whether to toggle the bet panel
  */
 function togglePanel(isBetPanel) {
@@ -561,6 +565,10 @@ function togglePanel(isBetPanel) {
     containerPlaceBet.style.display = (!isBetPanel) ? "none":"flex";
 }
 
+/**
+ * Toggles between the start round message and summary panel
+ * @param {Boolean} isMessage whether to toggle the start message
+ */
 function toggleOverlayPanel(isMessage) {
     startRoundMessage.style.display = (isMessage) ? "flex":"none";
     containerOverlaySummery.style.display = (isMessage) ? "none":"flex";

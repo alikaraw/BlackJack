@@ -41,7 +41,7 @@ export default class Player {
      * @returns whether the player can split his hand
      */
     canSplit() {
-        return this.handMain.length == 2 && this.handSplit.length == 0 && this.handMain[0].value == this.handMain[1].value && this.balance >= this.bet;
+        return this.handMain[0].value == this.handMain[1].value && this.balance >= this.bet && this.canSurrender();
     }
 
     /**
@@ -51,6 +51,40 @@ export default class Player {
         this.balance -= this.bet;
         this.handSplit.push(this.handMain.pop());
         this.splittedHand = true;
+    }
+
+    /**
+     * Checks if the player can double his bet
+     * A player can double his bet only if he has 2 card in main hand, 0 cards in split hand and have enough balance to double it
+     * @returns true if the player can double his bet
+     */
+    canDouble() {
+        return this.balance >= this.bet && this.canSurrender();
+    }
+
+    /**
+     * Doubles the bet of the player
+     */
+    doubleHand() {
+        this.balance -= this.bet;
+        this.bet *= 2;
+    }
+
+    /**
+     * Checks if the player can surrender
+     * A player can surrender only if he has 2 cards in main hand and 0 cards in split hand
+     * @returns true of the player can surrender
+     */
+    canSurrender() {
+        return this.handMain.length == 2 && this.handSplit.length == 0;
+    }
+
+    /**
+     * Surrenders the player hand
+     */
+    surrenderHand() {
+        this.balance += this.bet * 0.5;
+        this.bet = 0;
     }
 
     /**
@@ -90,10 +124,18 @@ export default class Player {
         return this._calcHandPoints(this.handSplit);
     }
 
+    /**
+     * Check if the main hand of the player has blackjack
+     * @returns {Boolean} whether the main hand has blackjack
+     */
     isMainHandBJ() {
         return this._hasBlackjack(this.handMain);
     }
 
+    /**
+     * Check if the split hand of the player has blackjack
+     * @returns {Boolean} whether the split hand has blackjack
+     */
     isSplitHandBJ() {
         return this._hasBlackjack(this.handSplit);
     }
@@ -102,10 +144,6 @@ export default class Player {
         return cards.length == 2 && ((cards[0].value == 1 && cards[1].value >= 11) || (cards[0].value >= 11 && cards[1].value == 1));
     }
 
-    /**
-     * Returns the amount of points in a the array of cards
-     * @returns {Number} 
-     */
     _calcHandPoints(cards) {
         let sum = 0;
         let amountOfAces = 0;
