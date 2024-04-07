@@ -170,48 +170,39 @@ body{
     align-items: center;
 }
 
-.containerPlayerInfo{
+.playerInfo {
     width: 80%;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.playerInfo{
-    background-color: rgb(223, 233, 239);
+    text-align: center;
     border: 3px solid black;
     border-radius: 4px;
-    margin-top: auto;
-    margin-bottom: auto;
-    text-align: center;
-    box-shadow: -3px 3px rgb(48, 48, 48);
-    padding: 2% 0;
+    margin: auto;
+    background-color: lightgray;
 }
 
-.playerInfo *{
+.playerInfo p {
+    font-size: 19px;
     margin: 0;
-    letter-spacing: 0.5px;
 }
 
-.playerName{
-    letter-spacing: 0.75px;
-    font-size: 20px;
+.playerInfo > :first-child {
+    margin: 10px 0 5px 0;
     font-weight: bold;
+    font-size: 23px;
 }
 
-.playerInfo > div{
-    background-color: lightblue;
-    border: 3px solid black;
-    padding: 5px 0;
-    margin: 5px;
-    box-shadow: -2px 2px rgb(144, 144, 144);
+.playerInfo > :nth-child(2) {
+    margin-bottom: 10px;
 }
 
-.playerInfo > div :nth-child(3){
-    margin-top: 10px;
+.playerInfo > :last-child {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5px;
 }
 
-.playerInfo > div :nth-child(2n){
-    margin-top: 3px;
+.playerInfo > :last-child > div > :first-child {
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 /* Dealer & Player */
@@ -345,44 +336,51 @@ body{
 /* Panel - Player Information Section */
 
 #containerPlayerInformationPanel{
-    background-color: rgb(223, 233, 239);
+    background-color: rgb(255, 255, 255);
     border: 3px solid black;
-    border-radius: 10px;
+    height: 85%;
     margin: auto 0;
     width: 15%;
-    box-shadow: -3px 3px rgb(48, 48, 48);
-    padding: 10px;
-}
-
-#containerPlayerInformationPanel > div{
-    background-color: lightblue;
-    border: 3px solid black;
     border-radius: 10px;
+    box-shadow: -3px 3px rgb(48, 48, 48);
     text-align: center;
 }
 
-#containerPlayerInformationPanel > div * {
+#containerPlayerInformationPanel p {
+    margin: 0;
+}
+
+#containerPlayerInformationPanel > :first-child{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 20px;
     font-weight: bold;
-    font-size: 19px;
     margin: 5px 0;
-    letter-spacing: 1px;
 }
 
-#containerPlayerInformationPanel> div :first-child{
-    margin-top: 10px;
-    font-size: 25px;
+#containerPlayerInformationPanel > :last-child {
+    border-radius: 4px;
+    border: 3px solid black;
+    background-color: lightgray;
+    height: 73%;
+    margin: 0 10px;
+    border-radius: 4px;
 }
 
-#containerPlayerInformationPanel> div :nth-child(2){
-    font-size: 23px;
+#containerPlayerInformationPanel > :last-child > :first-child{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
 }
 
-#containerPlayerInformationPanel> div :nth-child(3){
-    margin-top: 10px;
-} 
+#containerPlayerInformationPanel > :last-child > :first-child > div > :first-child,
+#containerPlayerInformationPanel > :last-child > :last-child > :first-child {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
-#containerPlayerInformationPanel> div :last-child{
-    margin-bottom: 10px;
+#containerPlayerInformationPanel > :last-child > :first-child > div > *{
+    margin-bottom: 2px;
 }
 
 /* Panel - Action Buttons Section */

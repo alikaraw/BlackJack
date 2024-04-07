@@ -6,6 +6,8 @@ export default class Player {
     constructor(name){
         this.name = name;
         this.balance = 1500;
+        this.wins = 0;
+        this.loses = 0;
         this.resetPlayer();
     }
 
@@ -41,7 +43,7 @@ export default class Player {
      * @returns whether the player can split his hand
      */
     canSplit() {
-        return this.handMain[0].value == this.handMain[1].value && this.balance >= this.bet && this.canSurrender();
+        return this.canSurrender() && this.handMain[0].value == this.handMain[1].value && this.balance >= this.bet;
     }
 
     /**
@@ -59,7 +61,7 @@ export default class Player {
      * @returns true if the player can double his bet
      */
     canDouble() {
-        return this.balance >= this.bet && this.canSurrender();
+        return this.canSurrender() && this.balance >= this.bet;
     }
 
     /**

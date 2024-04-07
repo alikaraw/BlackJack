@@ -303,11 +303,13 @@ function finishGameRound() {
         playerOverlayInformation.children[0].children[0].children[1].innerText = `${player.bet}$ Bet`;
 
         // Hand 2
+        playerOverlayInformation.children[0].children[1].style.opacity = (didPlayerSplit) ? 1 : 0.5;
         playerOverlayInformation.children[0].children[1].children[0].innerText = `${(didPlayerSplit) ? player.getSplitHandPoints() : '-'} Points`;
         playerOverlayInformation.children[0].children[1].children[1].innerText = `${(didPlayerSplit) ? `${player.bet}$` : '-'} Bet`;
 
         // Insurance
-        playerOverlayInformation.children[1].innerHTML = `${player.insurance}$ - Insurance`;
+        playerOverlayInformation.children[1].style.opacity = (player.insurance != 0) ? 1 : 0.5;
+        playerOverlayInformation.children[1].innerHTML = `${player.insurance != 0 ? `${player.insurance}$` : "-"} Insurance`;
 
         // Total Bet Money
         let totalBetMoney = player.bet * (didPlayerSplit ? 2 : 1) + player.insurance;
@@ -315,7 +317,7 @@ function finishGameRound() {
 
         // Total Money Won
         let totalWonMoney = 0;
-        console.log(Dealer.isMainHandBJ());
+
         /* Main Hand Check */
         if (player.getMainHandPoints() <= 21) { //
             if(dealerPoints > 21) { // dealer lost he has over 21 points
@@ -354,14 +356,17 @@ function finishGameRound() {
         playerOverlayInformation.children[4].innerHTML = `${player.balance}$ - Total Balance`;
 
         // Color Backhground according to win/lose/tie with money
-        if(totalWonMoney > totalBetMoney) {
+        if(totalWonMoney > totalBetMoney) { // win
+            player.wins++;
             containerOverlayPlayer[iPlayer].style.backgroundColor = "#7aef95";
-        } else if (totalWonMoney < totalBetMoney) {
+        } else if (totalWonMoney < totalBetMoney) { // lose
+            player.loses++;
             containerOverlayPlayer[iPlayer].style.backgroundColor = "#F77B7D";
-        } else {
+        } else { // tie
             containerOverlayPlayer[iPlayer].style.backgroundColor = "#7ba7f7";
-
         }
+
+        updatePlayerInfo(iPlayer);
     }
 
     // make other panels invisible
@@ -452,20 +457,12 @@ function getCardImage(card) {
  * @param {Number} iPlayer index of the player to update the information 
  */
 function updatePlayerInfo(iPlayer) {
-    let playerInfoElement = containerPlayersInfo.children[iPlayer].children[0].children[0];
-    // 0 = name
-    // 1 = points
-    // 2 = cash
-    // 3 = bet
-    playerInfoElement.children[0].innerHTML = Players[iPlayer].name;
-    playerInfoElement.children[1].innerHTML = `${Players[iPlayer].balance}$`
-    if(!Players[iPlayer].getSplitHandPoints()) {
-        playerInfoElement.children[2].innerHTML = `${Players[iPlayer].getMainHandPoints()} Points`; 
-        playerInfoElement.children[3].innerHTML = `${Players[iPlayer].bet}$ Bet`
-    } else {
-        playerInfoElement.children[2].innerHTML = `${Players[iPlayer].getMainHandPoints()} / ${Players[iPlayer].getSplitHandPoints()} Points`; // if 2 hands type with / between the numbers
-        playerInfoElement.children[3].innerHTML = `2x${Players[iPlayer].bet}$ Bet`
-    }
+    let playerInfoElement = containerPlayersInfo.children[iPlayer];
+    playerInfoElement.children[0].textContent = Players[iPlayer].name;
+    playerInfoElement.children[1].textContent = `${Players[iPlayer].balance}$`;
+
+    playerInfoElement.children[2].children[0].children[1].textContent = Players[iPlayer].wins;
+    playerInfoElement.children[2].children[1].children[1].textContent = Players[iPlayer].loses;
 }
 
 /**
@@ -504,11 +501,20 @@ function updateDealerGame() {
  */
 function updatePlayerPanelInfo() {
     let player =  Players[CurrentPlayerIndex];
-    let elements = containerPlayerInformationPanel.children[0].children;
-    elements[0].innerHTML = player.name;
-    elements[1].innerHTML = `${player.balance}$`;
-    elements[2].innerHTML = `${player.getMainHandPoints()} Points`;
-    elements[3].innerHTML = `${player.bet}$ Bet${(player.insurance == 0 ? ``:` ${player.insurance}$ ins`)}`;
+    let elements = containerPlayerInformationPanel;
+
+    elements.children[0].children[0].textContent = player.name;
+    elements.children[0].children[1].textContent = `${player.balance}$`;
+
+    elements.children[1].children[0].children[0].children[1].textContent = `${player.getMainHandPoints()} Points`;
+    elements.children[1].children[0].children[0].children[2].textContent = `${player.bet} Bet`;
+
+    elements.children[1].children[0].children[1].style.opacity = player.getSplitHandPoints() != 0 ? 1 : 0.5;
+    elements.children[1].children[0].children[1].children[1].textContent = `${player.getSplitHandPoints() != 0 ? player.getSplitHandPoints() : "-"} Points`;
+    elements.children[1].children[0].children[1].children[2].textContent = `${player.getSplitHandPoints() != 0 ? player.bet : "-"} Bet`;
+
+    elements.children[1].children[1].style.opacity = player.insurance != 0 ? 1 : 0.5;
+    elements.children[1].children[1].children[1].textContent = player.insurance != 0 ? `${player.insurance}$` : "-";
 }
 
 /**
@@ -534,7 +540,7 @@ function updateActionButtons() {
     
     // hand over 21 OR currentPlayerFinished > means the current player is done playing
     if(player.getMainHandPoints() >= 21 || CurrentPlayerFinished) {
-        // btnHit.disabled = true;
+        btnHit.disabled = true;
         btnDouble.disabled = true;
         btnStand.disabled = true;
         btnSplit.disabled = true;
