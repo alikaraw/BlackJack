@@ -42,12 +42,14 @@ let containerPlayerInformationPanel = document.getElementById("containerPlayerIn
 const GameDeck = new Deck();
 const AmountOfPlayers = sessionStorage.getItem("amountOfPlayers");
 const Players = [];
+const OutPlayers = [];
 const Dealer = new Player("Dealer");
 
 let CurrentPlayerIndex = 0;
 let CurrentBetAmount = 0;
 let CurrentPlayerFinished = false;
 let FinishedTheRound = false;
+let StartNewGame = false;
 
 /* On Click Functions */
 
@@ -157,10 +159,24 @@ btnInsurance.onclick = () => {
 }
 
 btnNextPlayer.onclick = () => {
+    if(StartNewGame) {
+        console.log("new game !")
+        window.location = "index.html";
+    }
+
     if(FinishedTheRound) {
         togglePanel(true);
         startBettingRound();
         updatePlayerPanelInfo();
+
+        for(let iPlayer = 0; iPlayer < Players.length; iPlayer++) {
+            updatePlayerInfo(iPlayer);
+        }
+
+        for(let iPlayer = 0; iPlayer < OutPlayers.length; iPlayer++) {
+            updatePlayerInfo(iPlayer, false);
+        }
+
         FinishedTheRound = false;
         return;
     }
@@ -224,7 +240,7 @@ function initGameCycle() {
     }
 
     // Create Deck
-    for(let deck = 0; deck < 6; deck++) { // 5 decks 
+    for(let deck = 0; deck < 5; deck++) { // 4 decks 
         for(let symbol = 0; symbol < 4; symbol++) { // 4 Symbols
             for(let value = 1; value <= 13; value++) { // 13 Cards per Symbol
                 GameDeck.addCard(new Card(value, symbol))
@@ -369,14 +385,35 @@ function finishGameRound() {
         updatePlayerInfo(iPlayer);
     }
 
+    // remove players with 0 balance from the game
+    let indexsToRemove = [];
+    for(let iCheck = 0; iCheck < Players.length; iCheck++) {
+        if(Players[iCheck].balance == 0) {
+            indexsToRemove.unshift(iCheck);
+            OutPlayers.push(Players[iCheck]);
+        }
+    }
+
+    indexsToRemove.forEach(i => {
+        Players.splice(i, 1);
+    })
+
     // make other panels invisible
     for(; iPlayer < 4; iPlayer++) {
         containerOverlayPlayer[iPlayer].style.display = 'none';
     }
 
-    CurrentPlayerIndex = 0;
-    FinishedTheRound = true;
-    btnNextPlayer.innerHTML = "Start New Round";
+    // All Players are out
+    console.log(Players);
+    if(Players.length == 0) {
+        btnNextPlayer.innerHTML = "Start New Game";
+        StartNewGame = true;
+    } else {
+        CurrentPlayerIndex = 0;
+        FinishedTheRound = true;
+        btnNextPlayer.innerHTML = "Start New Round";
+    }
+    
     btnNextPlayer.disabled = true;
     setTimeout(() => {
         btnNextPlayer.disabled = false;
@@ -456,13 +493,16 @@ function getCardImage(card) {
  * Updates the information for the player in the side bar
  * @param {Number} iPlayer index of the player to update the information 
  */
-function updatePlayerInfo(iPlayer) {
-    let playerInfoElement = containerPlayersInfo.children[iPlayer];
-    playerInfoElement.children[0].textContent = Players[iPlayer].name;
-    playerInfoElement.children[1].textContent = `${Players[iPlayer].balance}$`;
+function updatePlayerInfo(iPlayer, isInGame = true) {
+    let playerInfoElement = isInGame ? containerPlayersInfo.children[iPlayer] : containerPlayersInfo.children[Players.length + iPlayer];
+    let player = isInGame ? Players[iPlayer] : OutPlayers[iPlayer];
+    playerInfoElement.children[0].textContent = player.name;
+    playerInfoElement.children[1].textContent = `${player.balance}$`;
 
-    playerInfoElement.children[2].children[0].children[1].textContent = Players[iPlayer].wins;
-    playerInfoElement.children[2].children[1].children[1].textContent = Players[iPlayer].loses;
+    playerInfoElement.children[2].children[0].children[1].textContent = player.wins;
+    playerInfoElement.children[2].children[1].children[1].textContent = player.loses;
+
+    playerInfoElement.style.opacity = isInGame ? 1 : 0.5;
 }
 
 /**
